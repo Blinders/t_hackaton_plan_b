@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Blinder Index Title</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+
+var myApp = angular.module('myApp', []);
+
+myApp.controller('mainCtrl', ['$scope', function ($scope) {
+  $scope.text = 'Hello, Angular fanatic.';
+  $scope.tapIdx = 0;
+  
+  $scope.clickTap = function(idx){
+    $scope.tapIdx = idx;
+  }
+}]);
+
+</script>
+</head>
+<body>
+<div ng-app="myApp">
+<div ng-controller="mainCtrl">
+  <!-- Upper Panel -->
+  <div ng-show="tapIdx == 0" style="height: 90vh; background-color: #EEEEEE;">
+  </div>
+  <div ng-show="tapIdx == 1"style="height: 90vh; background-color: #FFCA28;">
+  </div>
+  <div ng-show="tapIdx == 2"style="height: 90vh; background-color: #80DEEA;">
+  </div>
+
+  <!-- Under Panel -->
+  <div style="height: 10vh;">
+    <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="text-align: center; height:inherit; padding-top:5%; border: 1px lightgray solid;" ng-click="clickTap(0)">
+        <i class="fa fa-user fa-2x"></i>
+    </div>
+    <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="text-align: center; height:inherit; padding-top:5%; border: 1px lightgray solid;"ng-click="clickTap(1)">
+        <i class="fa fa-pie-chart fa-2x"></i>
+    </div>
+    <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="text-align: center; height:inherit; padding-top:5%; border: 1px lightgray solid;"ng-click="clickTap(2)">
+      <i class="fa fa-info-circle fa-2x"></i>
+    </div>
+  </div>
+  
+</div>
+</div>
+</body>
+</html>
