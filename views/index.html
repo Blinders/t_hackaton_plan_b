@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link href="stylesheets/style.css" rel="stylesheet"></link>
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -15,23 +16,37 @@ var myApp = angular.module('myApp', []);
 myApp.controller('mainCtrl', ['$scope', function ($scope) {
   $scope.text = 'Hello, Angular fanatic.';
   $scope.tapIdx = 0;
+  $scope.count = 0;
   
   $scope.clickTap = function(idx){
     $scope.tapIdx = idx;
   }
+  
 }]);
 
 </script>
 </head>
+
+
+
 <body>
 <div ng-app="myApp">
 <div ng-controller="mainCtrl">
   <!-- Upper Panel -->
-  <div ng-show="tapIdx == 0" style="height: 90vh; background-color: #EEEEEE;">
+  <div id="tab_0" ng-show="tapIdx == 0">
+    <div id="block">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" style="font-size: 50px; height: inherit; text-align: center; vertical-align: middle;">
+        <div >{{count}}</div>
+      </div>
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" style="height: inherit">
+      <i class="fa fa-caret-up fa-2x" style="margin-right: 5px;" ng-click="count = count+1"></i>
+      <i class="fa fa-caret-down fa-2x" style="margin-right: 5px;" ng-click="count = count-1"></i>
+      </div>
+    </div>
   </div>
-  <div ng-show="tapIdx == 1"style="height: 90vh; background-color: #FFCA28;">
+  <div id="tab_1" ng-show="tapIdx == 1">
   </div>
-  <div ng-show="tapIdx == 2"style="height: 90vh; background-color: #80DEEA;">
+  <div id="tab_2" ng-show="tapIdx == 2">
   </div>
 
   <!-- Under Panel -->
