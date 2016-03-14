@@ -5,24 +5,38 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
 <link href="stylesheets/style.css" rel="stylesheet"></link>
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 
 var myApp = angular.module('myApp', []);
 
-myApp.controller('mainCtrl', ['$scope', function ($scope) {
-  $scope.text = 'Hello, Angular fanatic.';
+myApp.controller('mainCtrl', function ($scope, $timeout) {
   $scope.tapIdx = 0;
-  $scope.count = 0;
+
+  $timeout(function(){
+    $scope.tapIdx = 1;
+  }, 2500);
   
-  $scope.clickTap = function(idx){
-    $scope.tapIdx = idx;
+  var swiper = new Swiper('.swiper-container', {
+    effect: 'slide',
+    paginationClickable: true,
+    pagination: '.swiper-pagination',
+    paginationType: 'custom', // custom
+    paginationCustomRender: function (swiper, current, total) {
+      return (current == 1)? 
+          '<i class="fa fa-heart fa-3x" style="color:#D50000; margin:15px;"></i><i class="fa fa-heart fa-3x" style="color:#000; margin:15px;"></i>' 
+          :
+          '<i class="fa fa-heart fa-3x" style="color:#000; margin:15px;"></i><i class="fa fa-heart fa-3x" style="color:#D50000; margin:15px;"></i>' ;
   }
+});
   
-}]);
+});
 
 </script>
 </head>
@@ -32,35 +46,22 @@ myApp.controller('mainCtrl', ['$scope', function ($scope) {
 <body>
 <div ng-app="myApp">
 <div ng-controller="mainCtrl">
-  <!-- Upper Panel -->
-  <div id="tab_0" ng-show="tapIdx == 0">
-    <div id="block">
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" style="font-size: 50px; height: inherit; text-align: center; vertical-align: middle;">
-        <div >{{count}}</div>
-      </div>
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" style="height: inherit">
-      <i class="fa fa-caret-up fa-2x" style="margin-right: 5px;" ng-click="count = count+1"></i>
-      <i class="fa fa-caret-down fa-2x" style="margin-right: 5px;" ng-click="count = count-1"></i>
-      </div>
-    </div>
-  </div>
-  <div id="tab_1" ng-show="tapIdx == 1">
-  </div>
-  <div id="tab_2" ng-show="tapIdx == 2">
-  </div>
 
-  <!-- Under Panel -->
-  <div style="height: 10vh;">
-    <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="text-align: center; height:inherit; padding-top:5%; border: 1px lightgray solid;" ng-click="clickTap(0)">
-        <i class="fa fa-user fa-2x"></i>
+    <!-- Intro panel -->
+    <div class="intro-container" ng-show="tapIdx == 0">
     </div>
-    <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="text-align: center; height:inherit; padding-top:5%; border: 1px lightgray solid;"ng-click="clickTap(1)">
-        <i class="fa fa-pie-chart fa-2x"></i>
+    
+    <!-- Main Panel + Swiper -->
+    <div ng-show="tapIdx != 0" class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">나의 바디스트림 </div>
+            <div class="swiper-slide">나의 보관함</div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination">
+        </div>
     </div>
-    <div class="col-md-4 col-xs-4 col-sm-4 col-lg-4" style="text-align: center; height:inherit; padding-top:5%; border: 1px lightgray solid;"ng-click="clickTap(2)">
-      <i class="fa fa-info-circle fa-2x"></i>
-    </div>
-  </div>
+
   
 </div>
 </div>
