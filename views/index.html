@@ -3,14 +3,18 @@
 <head>
 <title>Blinder Index Title</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></link>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css"></link>
 <link href="stylesheets/style.css" rel="stylesheet"></link>
+
+<!-- JS -->
 <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/nnattawat/flip/v1.0.19/dist/jquery.flip.min.js"></script>
 <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 
@@ -18,10 +22,23 @@ var myApp = angular.module('myApp', []);
 
 myApp.controller('mainCtrl', function ($scope, $timeout) {
   $scope.tapIdx = 0;
+  $scope.frontBodyStreamCount = 0;
+  $scope.backBodyStreamCount = 1;
 
   $timeout(function(){
     $scope.tapIdx = 1;
   }, 2500);
+  
+  $scope.frontBodyStremCountClick = function(){
+    $timeout(function(){
+      $scope.frontBodyStreamCount+=2;
+    },100);
+  };
+  $scope.backBodyStremCountClick = function(){
+    $timeout(function(){
+      $scope.backBodyStreamCount+=2;
+    },100);
+  };
   
   var swiper = new Swiper('.swiper-container', {
     effect: 'slide',
@@ -29,41 +46,51 @@ myApp.controller('mainCtrl', function ($scope, $timeout) {
     pagination: '.swiper-pagination',
     paginationType: 'custom', // custom
     paginationCustomRender: function (swiper, current, total) {
-      return (current == 1)? 
+      return (current <= 1)? 
           '<i class="fa fa-heart fa-3x" style="color:#D50000; margin:15px;"></i><i class="fa fa-heart fa-3x" style="color:#000; margin:15px;"></i>' 
           :
           '<i class="fa fa-heart fa-3x" style="color:#000; margin:15px;"></i><i class="fa fa-heart fa-3x" style="color:#D50000; margin:15px;"></i>' ;
-  }
-});
-  
+    }
+  });
 });
 
+</script>
+<script>
+$(function($) {
+  $("#card").flip({
+    axis: 'x',
+    trigger: 'click'
+  });
+});
 </script>
 </head>
 
 
 
 <body>
-<div ng-app="myApp">
-<div ng-controller="mainCtrl">
+  <div ng-app="myApp">
+    <div ng-controller="mainCtrl">
 
-    <!-- Intro panel -->
-    <div class="intro-container" ng-show="tapIdx == 0">
-    </div>
-    
-    <!-- Main Panel + Swiper -->
-    <div ng-show="tapIdx != 0" class="swiper-container">
+      <!-- Intro panel -->
+      <div class="intro-container" ng-show="tapIdx == 0"></div>
+
+      <!-- Main Panel + Swiper -->
+      <div ng-show="tapIdx != 0" class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">나의 바디스트림 </div>
-            <div class="swiper-slide">나의 보관함</div>
+          <div class="swiper-slide">나의 바디스트림</div>
+          <div class="swiper-slide">나의 보관함</div>
+          <div class="swiper-slide">
+            <div id="card">
+              <div ng-click="frontBodyStremCountClick()">{{frontBodyStreamCount}}</div>
+              <div ng-click="backBodyStremCountClick()">{{backBodyStreamCount}}</div>
+            </div>
+          </div>
         </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination">
-        </div>
-    </div>
+      </div>
 
-  
-</div>
-</div>
+      <!-- Add Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
 </body>
 </html>
