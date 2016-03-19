@@ -3,6 +3,8 @@
 <head>
 <title>Blinder Index Title</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0 maximum-scale=1.0" />
+
 <!-- CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"></link>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></link>
@@ -40,6 +42,10 @@ myApp.controller('mainCtrl', function ($scope, $timeout) {
     },100);
   };
   
+  $scope.ggg = function(){
+	  var test = "pver";
+  };
+  
   var swiper = new Swiper('.swiper-container', {
     effect: 'slide',
     paginationClickable: true,
@@ -47,9 +53,9 @@ myApp.controller('mainCtrl', function ($scope, $timeout) {
     paginationType: 'custom', // custom
     paginationCustomRender: function (swiper, current, total) {
       return (current <= 1)? 
-          '<i class="fa fa-heart fa-3x" style="color:#D50000; margin:15px;"></i><i class="fa fa-heart fa-3x" style="color:#000; margin:15px;"></i>' 
+          '<i class="fa fa-heart fa-2x" style="color:#D50000; margin:15px;"></i><i class="fa fa-heart fa-2x" style="color:#000; margin:15px;"></i>' 
           :
-          '<i class="fa fa-heart fa-3x" style="color:#000; margin:15px;"></i><i class="fa fa-heart fa-3x" style="color:#D50000; margin:15px;"></i>' ;
+          '<i class="fa fa-heart fa-2x" style="color:#000; margin:15px;"></i><i class="fa fa-heart fa-2x" style="color:#D50000; margin:15px;"></i>' ;
     }
   });
 });
@@ -63,9 +69,8 @@ $(function($) {
   });
 });
 </script>
+
 </head>
-
-
 
 <body>
   <div ng-app="myApp">
@@ -77,8 +82,11 @@ $(function($) {
       <!-- Main Panel + Swiper -->
       <div ng-show="tapIdx != 0" class="swiper-container">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">나의 바디스트림</div>
-          <div class="swiper-slide">나의 보관함</div>
+          <iframe class="swiper-slide" src="https://openhw.sp1.sktiot.com/?#/dashboard" style="width:100%; height:80vh;">
+          </iframe>
+          <div class="swiper-slide">
+                             <%= title %>
+          </div>
           <div class="swiper-slide">
             <div id="card">
               <div ng-click="frontBodyStremCountClick()">{{frontBodyStreamCount}}</div>
