@@ -6,13 +6,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
-  , test = require('./routes/test')
   , http = require('http')
   , path = require('path')
-  , parseString = require('xml2js').parseString
-  , httpReq = require('./promise-http').request
-  , optionData = require('./config');
 
 var ultrasonic = require("jsupm_groveultrasonic");
 var sensor = new ultrasonic.GroveUltraSonic(2);
@@ -96,42 +91,6 @@ if ('development' == app.get('env')) {
 app.get('/', function(req, res){
   res.render('index', { title: distance });
 });
-
-app.get('/users', user.list);
-app.get('/test', function(req, res) {
-  res.send('hello world');
-});
-//app.get('/test2', test.list);
-
-app.get('/test2', function (req, res) {
-	console.log('/');
-	httpReq({
-	  options: {
-	    host : 'sandbox.sktiot.com',
-	    port: '9000',
-	    path : '/ThingPlug/remoteCSE-'+ optionData.node_ID+ '/container-'+optionData.container_name+'/latest',
-	    method: 'GET',
-	    headers : {
-	      Accept: 'application/xml',
-	      locale: 'ko',
-	      uKey : optionData.uKey,
-	      'X-M2M-RI': randomInt(100000, 999999),
-	      'X-M2M-Origin': optionData.app_ID
-	    }
-	  }
-	}).then(function(result){
-	  console.log(colors.green('1. latest contentInstance 조회'));
-	  if(result.data){
-		  console.log('test2 Page3');
-	    parseString(result.data,function(err, xmlObj){
-				res.send("TEST Gray")
-	    });
-	  }else{
-			res.send('oneM2M 서버에서 contentInstance를 조회하는데 실패했습니다.');
-		}
-	});
-});
-
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
