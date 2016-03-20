@@ -32,6 +32,7 @@ myApp.controller('mainCtrl', function ($scope, $timeout) {
   }, 2500);
   var tmpRemainValue =  angular.element("#remainValue").text();
   $scope.remainValue = Math.round((tmpRemainValue > 24)? 100 : (24 - tmpRemainValue)/24*100);
+  $scope.remainValueUnderTen = ($scope.remainValue < 10)? true : false;
   angular.element("#remainValue").text($scope.remainValue+"%");
   $scope.buyBtnDisabled = ($scope.remainValue > 25)? true : false;
   $scope.enoughPadToastShow = false;
@@ -98,9 +99,9 @@ $(function($) {
           <div class="swiper-slide" style="display: block;">
             <img src="../resources/image/model.png" style="margin-top:78px; height:60vh;">
             </img>
-            <div style="position: absolute; top: 40%; margin-left: 35%; margin-right:35%; text-align:center;">
+            <div style="position: absolute; top: 40%; margin-right:35%; text-align:center;" ng-style="{ 'margin-left' : remainValueUnderTen? '38%' : '35%' } "  >
               <div id="remainValue" style="position:relative; color: #EC6183; border: 1px solid #EC6183; border-radius: 4px; background-color: rgba(255,255,255,0.8); padding-right: 10px; padding-left: 10px;"><%= title %></div>
-              <button type="button" class="btn btn-danger" ng-click="changeEnoughPadToastValue()" style="top:127px; position:relative;" ng-style="{ opacity : buyBtnDisabled? '0.3' : '1'} ">구매하기</button>
+              <button type="button" class="btn btn-danger" ng-click="changeEnoughPadToastValue()" style="top: 127px; position:relative;" ng-style="{ opacity : buyBtnDisabled? '0.3' : '1'} ">구매하기</button>
             </div>
             <div class="alert alert-info alert-dismissible" ng-show="enoughPadToastShow" role="alert" style="font-size: 15px;" ng-click="enoughPadToastShow = !enoughPadToastShow">
   			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
