@@ -8,6 +8,7 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
+var app = express();
 
 var ultrasonic = require("jsupm_groveultrasonic");
 var sensor = new ultrasonic.GroveUltraSonic(2);
@@ -17,8 +18,6 @@ var sensorModule = require('jsupm_ttp223');
 var distance = 0;
 var touch = new sensorModule.TTP223(3);
 myLcd.setColor(238,135,160);
-
-var app = express();
 
 var myInterval = setInterval(function(){
   var travelTime = sensor.getDistance();

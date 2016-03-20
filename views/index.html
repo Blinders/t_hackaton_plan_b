@@ -30,6 +30,21 @@ myApp.controller('mainCtrl', function ($scope, $timeout) {
   $timeout(function(){
     $scope.tapIdx = 1;
   }, 2500);
+  var tmpRemainValue =  angular.element("#remainValue").text();
+  $scope.remainValue = Math.round((tmpRemainValue > 24)? 100 : (24 - tmpRemainValue)/24*100);
+  angular.element("#remainValue").text($scope.remainValue+"%");
+  $scope.buyBtnDisabled = ($scope.remainValue > 25)? true : false;
+  $scope.enoughPadToastShow = false;
+  
+  $scope.changeEnoughPadToastValue = function(){
+	if($scope.buyBtnDisabled){
+		$scope.enoughPadToastShow = !$scope.enoughPadToastShow;
+	}
+	else{
+	$scope.enoughPadToastShow = $scope.enoughPadToastShow;
+	window.open("http://m.11st.co.kr/MW/Search/searchProduct.tmall?decSearchKeyword=%BB%FD%B8%AE%B4%EB&searchKeyword=%25EC%2583%259D%25EB%25A6%25AC%25EB%258C%2580&sortCd=NP&showAdvProducts=Y&fromPrice=0&toPrice=0&pageSize=30&viewType=list_base#searchKeyword=%25EC%2583%259D%25EB%25A6%25AC%25EB%258C%2580&encodeSearchKeyword=%2525EC%252583%25259D%2525EB%2525A6%2525AC%2525EB%25258C%252580&dispCtgrNo=0&dispCtgrLevel=0&viewType=list_base&&&pageLoadType=ajax&");
+	}
+  };
   
   $scope.frontBodyStremCountClick = function(){
     $timeout(function(){
@@ -42,10 +57,6 @@ myApp.controller('mainCtrl', function ($scope, $timeout) {
     },100);
   };
   
-  $scope.ggg = function(){
-	  var test = "pver";
-  };
-  
   var swiper = new Swiper('.swiper-container', {
     effect: 'slide',
     paginationClickable: true,
@@ -53,9 +64,9 @@ myApp.controller('mainCtrl', function ($scope, $timeout) {
     paginationType: 'custom', // custom
     paginationCustomRender: function (swiper, current, total) {
       return (current <= 1)? 
-          '<i class="fa fa-heart fa-2x" style="color:#D50000; margin:15px;"></i><i class="fa fa-heart fa-2x" style="color:#000; margin:15px;"></i>' 
+          '<i class="fa fa-heart" style="color:#D50000; margin:15px;"></i><i class="fa fa-heart" style="color:#000; margin:15px;"></i>' 
           :
-          '<i class="fa fa-heart fa-2x" style="color:#000; margin:15px;"></i><i class="fa fa-heart fa-2x" style="color:#D50000; margin:15px;"></i>' ;
+          '<i class="fa fa-heart" style="color:#000; margin:15px;"></i><i class="fa fa-heart" style="color:#D50000; margin:15px;"></i>' ;
     }
   });
 });
@@ -84,15 +95,20 @@ $(function($) {
         <div class="swiper-wrapper">
           <iframe class="swiper-slide" src="https://openhw.sp1.sktiot.com/?#/dashboard" style="width:100%; height:80vh;">
           </iframe>
-          <div class="swiper-slide">
-                             <%= title %>
-          </div>
-          <div class="swiper-slide">
-            <div id="card">
-              <div ng-click="frontBodyStremCountClick()">{{frontBodyStreamCount}}</div>
-              <div ng-click="backBodyStremCountClick()">{{backBodyStreamCount}}</div>
+          <div class="swiper-slide" style="display: block;">
+            <img src="../resources/image/model.png" style="margin-top:78px; height:60vh;">
+            </img>
+            <div style="position: absolute; top: 40%; margin-left: 35%; margin-right:35%; text-align:center;">
+              <div id="remainValue" style="position:relative; color: #EC6183; border: 1px solid #EC6183; border-radius: 4px; background-color: rgba(255,255,255,0.8); padding-right: 10px; padding-left: 10px;"><%= title %></div>
+              <button type="button" class="btn btn-danger" ng-click="changeEnoughPadToastValue()" style="top:127px; position:relative;" ng-style="{ opacity : buyBtnDisabled? '0.3' : '1'} ">구매하기</button>
             </div>
-          </div>
+            <div class="alert alert-info alert-dismissible" ng-show="enoughPadToastShow" role="alert" style="font-size: 15px;" ng-click="enoughPadToastShow = !enoughPadToastShow">
+  			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  			    <span aria-hidden="true">×</span></button>
+  			    Enough your sanitary pad, if you want to buy someone, 
+  			    <a href="http://m.11st.co.kr/MW/Search/searchProduct.tmall?decSearchKeyword=%BB%FD%B8%AE%B4%EB&searchKeyword=%25EC%2583%259D%25EB%25A6%25AC%25EB%258C%2580&sortCd=NP&showAdvProducts=Y&fromPrice=0&toPrice=0&pageSize=30&viewType=list_base#searchKeyword=%25EC%2583%259D%25EB%25A6%25AC%25EB%258C%2580&encodeSearchKeyword=%2525EC%252583%25259D%2525EB%2525A6%2525AC%2525EB%25258C%252580&dispCtgrNo=0&dispCtgrLevel=0&viewType=list_base&&&pageLoadType=ajax&" class="alert-link">Click here.</a>
+		      </div>
+            </div>
         </div>
       </div>
 
